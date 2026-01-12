@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="lv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atrodi paroli</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="card" id="card">
+        <header class="top">
+          <h1>Atrodi paroli</h1>
+        </header>
+
+        <div class="field">
+          <label for="pw">Parole</label>
+          <div class="row">
+            <input
+              id="pw"
+              type="password"
+              autocomplete="off"
+              placeholder="Ievadi paroli…"
+              aria-describedby="help"
+            />
+            <button id="toggle" class="btn btn--ghost" type="button">
+              Rādīt
+            </button>
+          </div>
+          <div id="help" class="help">
+            Padoms: nepievieno liekas atstarpes sākumā/beigās.
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="check" class="btn" type="button">Pārbaudīt</button>
+          <button id="hint" class="btn btn--ghost" type="button">Mājiens</button>
+          <button id="reset" class="btn btn--ghost" type="button">Reset</button>
+        </div>
+
+        <div class="meta">
+          <div>Mēģinājumi: <strong id="tries">0</strong></div>
+          <div>Statuss: <strong id="status">gaida</strong></div>
+        </div>
+
+        <div id="msg" class="msg" aria-live="polite"></div>
+        
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
