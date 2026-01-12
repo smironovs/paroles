@@ -1,9 +1,9 @@
-<!doctype html>
+doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Password Guessing Lab (Demo)</title>
+    <title>Paroļu minēšana (Demo)</title>
     <style>
       * {
         box-sizing: border-box;
@@ -239,23 +239,22 @@
     
     <div class="app">
       <div class="header">
-        <h1>Password Guessing Lab (Interactive Demo)</h1>
+        <h1>Paroļu minēšana (DEMO)</h1>
         <p>
-          Two modes: Dictionary attack (tries common passwords first) and Brute
-          force (tries combinations). Educational simulation only.
+          Divi uzbrukuma veidi: Vārdnīcu uzbrukums un Brute
+          force (mēģina veidot kombinācijas)
         </p>
       </div>
 
       <div class="grid">
         <section class="card">
-          <h2>2) Dictionary Attack (Demo)</h2>
+          <h2>Vārdnīcu uzbrukums (Demo)</h2>
           <p class="sub">
-            Choose a target password, then click Run. It will try a small list
-            of common passwords in order.
+            Izvēlies paroli, kuru vēlies "uzlauzt" un spied Run.
           </p>
 
           <div class="row">
-            <label for="dictTarget">Target</label>
+            <label for="dictTarget">Mērķis</label>
             <select id="dictTarget">
               <option value="password">password</option>
               <option value="qwerty">qwerty</option>
@@ -272,11 +271,11 @@
           </div>
 
           <div class="row">
-            <label for="dictSpeed">Speed</label>
+            <label for="dictSpeed">Minēšanas ātrums</label>
             <select id="dictSpeed">
-              <option value="1">Fast</option>
-              <option value="2" selected>Medium</option>
-              <option value="3">Slow</option>
+              <option value="1">Ātrs</option>
+              <option value="2" selected>Vidējs</option>
+              <option value="3">Lēns</option>
             </select>
 
             <button id="dictRun" class="btn" type="button">Run</button>
@@ -290,15 +289,7 @@
 
           <div class="split">
             <div>
-              <div class="small">
-                Tip: dictionary attacks are effective because many people pick
-                common passwords.
-              </div>
-              <div class="status" id="dictStatus"></div>
-            </div>
-
-            <div>
-              <div class="small">Attempts (latest first)</div>
+              <div class="small">Mēģinājumi (jaunākais sākumā)</div>
               <div class="panel mono" id="dictLog"></div>
             </div>
           </div>
