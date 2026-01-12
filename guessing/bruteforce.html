@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Guessing Lab (Demo)</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #0b0b0b;
+        color: #f2f2f2;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, sans-serif;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+      }
+
+      .app {
+        width: min(980px, 100%);
+        display: grid;
+        gap: 14px;
+      }
+
+      .header {
+        border: 1px solid #2a2a2a;
+        background: #111111;
+        border-radius: 14px;
+        padding: 18px;
+      }
+
+      .header h1 {
+        margin: 0 0 6px;
+        font-size: 20px;
+        letter-spacing: 0.2px;
+      }
+
+      .header p {
+        margin: 0;
+        color: #bdbdbd;
+        line-height: 1.4;
+        font-size: 14px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .card {
+        border: 1px solid #2a2a2a;
+        background: #111111;
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+      }
+
+      .card h2 {
+        margin: 0 0 10px;
+        font-size: 16px;
+        letter-spacing: 0.2px;
+      }
+
+      .sub {
+        margin: 0 0 14px;
+        color: #bdbdbd;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .row + .row {
+        margin-top: 10px;
+      }
+
+      label {
+        color: #bdbdbd;
+        font-size: 13px;
+      }
+
+      input,
+      select {
+        border: 1px solid #2a2a2a;
+        background: #0d0d0d;
+        color: #f2f2f2;
+        border-radius: 10px;
+        padding: 10px 12px;
+        outline: none;
+        font-size: 14px;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #3a3a3a;
+        box-shadow: 0 0 0 3px rgba(242, 242, 242, 0.12);
+      }
+
+      input[type="text"] {
+        width: min(360px, 100%);
+        flex: 1;
+      }
+
+      .btn {
+        border: 1px solid #2a2a2a;
+        background: #141414;
+        color: #f2f2f2;
+        padding: 10px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 650;
+        font-size: 14px;
+      }
+
+      .btn:hover {
+        background: #1a1a1a;
+        border-color: #3a3a3a;
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      .btn:focus-visible {
+        outline: 2px solid #eaeaea;
+        outline-offset: 2px;
+      }
+
+      .btn-ghost {
+        background: transparent;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid #2a2a2a;
+        background: #0d0d0d;
+        padding: 8px 10px;
+        border-radius: 999px;
+        color: #bdbdbd;
+        font-size: 12px;
+      }
+
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+
+      .panel {
+        border: 1px solid #2a2a2a;
+        background: #0d0d0d;
+        border-radius: 12px;
+        padding: 12px;
+        min-height: 110px;
+        overflow: auto;
+      }
+
+      .line {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(242, 242, 242, 0.06);
+      }
+
+      .line:last-child {
+        border-bottom: none;
+      }
+
+      .muted {
+        color: #bdbdbd;
+      }
+
+      .right {
+        text-align: right;
+      }
+
+      .status {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid #2a2a2a;
+        background: #0d0d0d;
+        min-height: 52px;
+        line-height: 1.4;
+        font-size: 14px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      @media (min-width: 900px) {
+        .split {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .small {
+        font-size: 12px;
+        color: #bdbdbd;
+        line-height: 1.4;
+      }
+
+      .kbd {
+        border: 1px solid #2a2a2a;
+        background: #111111;
+        padding: 2px 6px;
+        border-radius: 8px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 12px;
+        color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="header">
+        <h1>Password Guessing Lab (Interactive Demo)</h1>
+        <p>
+          Two modes: Dictionary attack (tries common passwords first) and Brute
+          force (tries combinations). Educational simulation only.
+        </p>
+      </div>
+
+      <div class="grid">
+        <section class="card">
+          <h2>2) Dictionary Attack (Demo)</h2>
+          <p class="sub">
+            Choose a target password, then click Run. It will try a small list
+            of common passwords in order.
+          </p>
+
+          <div class="row">
+            <label for="dictTarget">Target</label>
+            <select id="dictTarget">
+              <option value="password">password</option>
+              <option value="qwerty">qwerty</option>
+              <option value="letmein">letmein</option>
+              <option value="admin">admin</option>
+              <option value="kiber123">kiber123</option>
+              <option value="summer2024">summer2024</option>
+              <option value="not_in_list">not_in_list</option>
+            </select>
+
+            <span class="pill"
+              >List size: <span id="dictSize" class="mono">0</span></span
+            >
+          </div>
+
+          <div class="row">
+            <label for="dictSpeed">Speed</label>
+            <select id="dictSpeed">
+              <option value="1">Fast</option>
+              <option value="2" selected>Medium</option>
+              <option value="3">Slow</option>
+            </select>
+
+            <button id="dictRun" class="btn" type="button">Run</button>
+            <button id="dictStop" class="btn btn-ghost" type="button">
+              Stop
+            </button>
+            <button id="dictReset" class="btn btn-ghost" type="button">
+              Reset
+            </button>
+          </div>
+
+          <div class="split">
+            <div>
+              <div class="small">
+                Tip: dictionary attacks are effective because many people pick
+                common passwords.
+              </div>
+              <div class="status" id="dictStatus"></div>
+            </div>
+
+            <div>
+              <div class="small">Attempts (latest first)</div>
+              <div class="panel mono" id="dictLog"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>3) Brute Force (Demo)</h2>
+          <p class="sub">
+            Choose a character set and length. It will try combinations from
+            left to right, like counting. Keep it small.
+          </p>
+
+          <div class="row">
+            <label for="bfCharset">Charset</label>
+            <select id="bfCharset">
+              <option value="digits">Digits (0-9)</option>
+              <option value="lower" selected>Lowercase (a-z)</option>
+              <option value="lowerDigits">Lowercase + digits</option>
+            </select>
+
+            <label for="bfLen">Length</label>
+            <select id="bfLen">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <label for="bfTarget">Target</label>
+            <input id="bfTarget" type="text" value="cat" class="mono" />
+
+            <label for="bfSpeed">Speed</label>
+            <select id="bfSpeed">
+              <option value="1">Fast</option>
+              <option value="2" selected>Medium</option>
+              <option value="3">Slow</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <button id="bfRun" class="btn" type="button">Run</button>
+            <button id="bfStop" class="btn btn-ghost" type="button">Stop</button>
+            <button id="bfReset" class="btn btn-ghost" type="button">
+              Reset
+            </button>
+
+            <span class="pill"
+              >Space:
+              <span id="bfSpace" class="mono">0</span></span
+            >
+            <span class="pill"
+              >Tried:
+              <span id="bfTried" class="mono">0</span></span
+            >
+          </div>
+
+          <div class="split">
+            <div>
+              <div class="small">
+                Brute force becomes impossible quickly as length grows:
+                possibilities = \( |\Sigma|^L \).
+              </div>
+              <div class="status" id="bfStatus"></div>
+              <div class="small" id="bfHint"></div>
+            </div>
+
+            <div>
+              <div class="small">
+                Live attempts (updates every few steps). Press
+                <span class="kbd">Stop</span> any time.
+              </div>
+              <div class="panel mono" id="bfLog"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      function el(id) {
+        return document.getElementById(id);
+      }
+
+      function clampLog(container, maxLines) {
+        const lines = container.querySelectorAll(".line");
+        if (lines.length <= maxLines) return;
+        for (let i = maxLines; i < lines.length; i += 1) {
+          lines[i].remove();
+        }
+      }
+
+      function addLogLine(container, left, right) {
+        const div = document.createElement("div");
+        div.className = "line";
+        const a = document.createElement("div");
+        a.textContent = left;
+        const b = document.createElement("div");
+        b.className = "right muted";
+        b.textContent = right;
+        div.appendChild(a);
+        div.appendChild(b);
+        container.prepend(div);
+      }
+
+      function setStatus(node, text) {
+        node.textContent = text;
+      }
+
+      function getDelay(speedValue) {
+        if (speedValue === "1") return 0;
+        if (speedValue === "2") return 35;
+        return 120;
+      }
+
+      function sleep(ms) {
+        return new Promise((r) => setTimeout(r, ms));
+      }
+
+      function charsetFromMode(mode) {
+        if (mode === "digits") return "0123456789";
+        if (mode === "lower") return "abcdefghijklmnopqrstuvwxyz";
+        return "abcdefghijklmnopqrstuvwxyz0123456789";
+      }
+
+      function powInt(base, exp) {
+        let out = 1n;
+        const b = BigInt(base);
+        for (let i = 0; i < exp; i += 1) out *= b;
+        return out;
+      }
+
+      function formatBigInt(n) {
+        const s = n.toString();
+        let out = "";
+        let c = 0;
+        for (let i = s.length - 1; i >= 0; i -= 1) {
+          out = s[i] + out;
+          c += 1;
+          if (c === 3 && i !== 0) {
+            out = "_" + out;
+            c = 0;
+          }
+        }
+        return out;
+      }
+
+      const dictCommon = [
+        "123456",
+        "123456789",
+        "qwerty",
+        "password",
+        "12345",
+        "12345678",
+        "111111",
+        "123123",
+        "admin",
+        "letmein",
+        "welcome",
+        "iloveyou",
+        "monkey",
+        "dragon",
+        "football",
+        "secret",
+        "sunshine",
+        "princess",
+        "trustno1",
+        "kiber123",
+        "summer2024",
+      ];
+
+      const dictTarget = el("dictTarget");
+      const dictSpeed = el("dictSpeed");
+      const dictRun = el("dictRun");
+      const dictStop = el("dictStop");
+      const dictReset = el("dictReset");
+      const dictSize = el("dictSize");
+      const dictStatus = el("dictStatus");
+      const dictLog = el("dictLog");
+
+      dictSize.textContent = String(dictCommon.length);
+
+      let dictRunning = false;
+      let dictToken = 0;
+
+      function dictUIRunning(running) {
+        dictRun.disabled = running;
+        dictTarget.disabled = running;
+        dictSpeed.disabled = running;
+        dictStop.disabled = !running;
+      }
+
+      async function runDictionary() {
+        if (dictRunning) return;
+        dictRunning = true;
+        dictToken += 1;
+        const token = dictToken;
+
+        dictUIRunning(true);
+        dictLog.innerHTML = "";
+        const target = dictTarget.value;
+        const delay = getDelay(dictSpeed.value);
+
+        setStatus(
+          dictStatus,
+          'Running dictionary attack demo. Target is set, trying common passwords...'
+        );
+
+        let attempts = 0;
+
+        for (let i = 0; i < dictCommon.length; i += 1) {
+          if (!dictRunning || token !== dictToken) return;
+
+          const guess = dictCommon[i];
+          attempts += 1;
+
+          addLogLine(dictLog, guess, `#${attempts}`);
+          clampLog(dictLog, 12);
+
+          if (guess === target) {
+            setStatus(
+              dictStatus,
+              `Found match: "${guess}" in ${attempts} attempts.`
+            );
+            dictRunning = false;
+            dictUIRunning(false);
+            return;
+          }
+
+          if (delay) await sleep(delay);
+        }
+
+        setStatus(
+          dictStatus,
+          `No match found in this dictionary (${attempts} attempts).`
+        );
+        dictRunning = false;
+        dictUIRunning(false);
+      }
+
+      function stopDictionary() {
+        dictRunning = false;
+        dictToken += 1;
+        dictUIRunning(false);
+        setStatus(dictStatus, "Stopped.");
+      }
+
+      function resetDictionary() {
+        stopDictionary();
+        dictLog.innerHTML = "";
+        setStatus(
+          dictStatus,
+          "Choose a target and press Run. It will try the built-in list."
+        );
+      }
+
+      dictRun.addEventListener("click", runDictionary);
+      dictStop.addEventListener("click", stopDictionary);
+      dictReset.addEventListener("click", resetDictionary);
+
+      resetDictionary();
+
+      const bfCharset = el("bfCharset");
+      const bfLen = el("bfLen");
+      const bfTarget = el("bfTarget");
+      const bfSpeed = el("bfSpeed");
+
+      const bfRun = el("bfRun");
+      const bfStop = el("bfStop");
+      const bfReset = el("bfReset");
+
+      const bfSpace = el("bfSpace");
+      const bfTried = el("bfTried");
+
+      const bfStatus = el("bfStatus");
+      const bfHint = el("bfHint");
+      const bfLog = el("bfLog");
+
+      let bfRunning = false;
+      let bfToken = 0;
+
+      function bfUIRunning(running) {
+        bfRun.disabled = running;
+        bfStop.disabled = !running;
+        bfCharset.disabled = running;
+        bfLen.disabled = running;
+        bfTarget.disabled = running;
+        bfSpeed.disabled = running;
+      }
+
+      function updateBruteMeta() {
+        const chars = charsetFromMode(bfCharset.value);
+        const len = Number(bfLen.value);
+        bfSpace.textContent = formatBigInt(powInt(chars.length, len));
+      }
+
+      function normalizeTarget(s) {
+        return s.trim();
+      }
+
+      function validateTarget(target, chars, len) {
+        if (target.length !== len) {
+          return `Target length must be ${len}.`;
+        }
+        for (let i = 0; i < target.length; i += 1) {
+          if (!chars.includes(target[i])) {
+            return `Target contains "${target[i]}", not in selected charset.`;
+          }
+        }
+        return "";
+      }
+
+      async function runBruteForce() {
+        if (bfRunning) return;
+
+        const chars = charsetFromMode(bfCharset.value);
+        const len = Number(bfLen.value);
+        const target = normalizeTarget(bfTarget.value);
+        const err = validateTarget(target, chars, len);
+
+        bfLog.innerHTML = "";
+        bfTried.textContent = "0";
+        updateBruteMeta();
+
+        if (err) {
+          setStatus(bfStatus, err);
+          bfHint.textContent = "";
+          return;
+        }
+
+        bfRunning = true;
+        bfToken += 1;
+        const token = bfToken;
+        bfUIRunning(true);
+
+        const delay = getDelay(bfSpeed.value);
+        const base = chars.length;
+
+        let tried = 0n;
+        const logEvery = delay === 0 ? 600 : delay <= 40 ? 80 : 20;
+
+        function fromIndex(idx) {
+          let x = idx;
+          let out = "";
+          for (let i = 0; i < len; i += 1) {
+            const r = x % BigInt(base);
+            out = chars[Number(r)] + out;
+            x = x / BigInt(base);
+          }
+          return out;
+        }
+
+        function toIndex(str) {
+          let idx = 0n;
+          for (let i = 0; i < str.length; i += 1) {
+            const pos = chars.indexOf(str[i]);
+            idx = idx * BigInt(base) + BigInt(pos);
+          }
+          return idx;
+        }
+
+        const space = powInt(base, len);
+        const targetIndex = toIndex(target);
+
+        setStatus(
+          bfStatus,
+          `Running brute force demo: charset size ${base}, length ${len}.`
+        );
+
+        let i = 0n;
+        while (i < space) {
+          if (!bfRunning || token !== bfToken) return;
+
+          const guess = fromIndex(i);
+          tried += 1n;
+
+          if (i === 0n) {
+            addLogLine(bfLog, guess, "#1");
+            clampLog(bfLog, 14);
+          } else if (Number(i % BigInt(logEvery)) === 0) {
+            addLogLine(bfLog, guess, `#${formatBigInt(tried)}`);
+            clampLog(bfLog, 14);
+          }
+
+          if (guess === target) {
+            bfTried.textContent = formatBigInt(tried);
+            setStatus(
+              bfStatus,
+              `Found match: "${guess}" after ${formatBigInt(tried)} attempts.`
+            );
+            bfHint.textContent = `Index position: ${formatBigInt(
+              targetIndex + 1n
+            )} out of ${formatBigInt(space)}.`;
+            bfRunning = false;
+            bfUIRunning(false);
+            return;
+          }
+
+          if (delay) await sleep(delay);
+          i += 1n;
+          bfTried.textContent = formatBigInt(tried);
+        }
+
+        bfTried.textContent = formatBigInt(tried);
+        setStatus(bfStatus, "No match found (unexpected in this setup).");
+        bfHint.textContent = "";
+        bfRunning = false;
+        bfUIRunning(false);
+      }
+
+      function stopBruteForce() {
+        bfRunning = false;
+        bfToken += 1;
+        bfUIRunning(false);
+        setStatus(bfStatus, "Stopped.");
+      }
+
+      function resetBruteForce() {
+        stopBruteForce();
+        bfLog.innerHTML = "";
+        bfTried.textContent = "0";
+        updateBruteMeta();
+        setStatus(
+          bfStatus,
+          "Set charset/length/target and press Run. Keep length small."
+        );
+        bfHint.textContent = "";
+      }
+
+      bfRun.addEventListener("click", runBruteForce);
+      bfStop.addEventListener("click", stopBruteForce);
+      bfReset.addEventListener("click", resetBruteForce);
+
+      bfCharset.addEventListener("change", () => {
+        updateBruteMeta();
+        resetBruteForce();
+      });
+
+      bfLen.addEventListener("change", () => {
+        updateBruteMeta();
+        resetBruteForce();
+      });
+
+      updateBruteMeta();
+      resetBruteForce();
+    </script>
+  </body>
+</html>
