@@ -494,11 +494,6 @@
         const target = dictTarget.value;
         const delay = getDelay(dictSpeed.value);
 
-        setStatus(
-          dictStatus,
-          'Running dictionary attack demo. Target is set, trying common passwords...'
-        );
-
         let attempts = 0;
 
         for (let i = 0; i < dictCommon.length; i += 1) {
@@ -616,7 +611,6 @@
         updateBruteMeta();
 
         if (err) {
-          setStatus(bfStatus, err);
           bfHint.textContent = "";
           return;
         }
