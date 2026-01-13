@@ -170,7 +170,8 @@
         border-radius: 12px;
         padding: 12px;
         min-height: 110px;
-        overflow: auto;
+        max-height: 150px;
+        overflow-y: scroll;
       }
 
       .line {
@@ -482,7 +483,7 @@
           attempts += 1;
 
           addLogLine(dictLog, guess, `#${attempts}`);
-          clampLog(dictLog, 12);
+          clampLog(dictLog, 17576);
 
           if (guess === target) {
             setStatus(
