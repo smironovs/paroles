@@ -1,4 +1,4 @@
-const pwd = "atrodi";
+const pwd = "admin";
 
 let tries = 0;
 
@@ -9,11 +9,9 @@ const reset = document.getElementById("reset");
 const toggle = document.getElementById("toggle");
 
 const triesEl = document.getElementById("tries");
-const statusEl = document.getElementById("status");
 
-function updateMeta(status) {
+function updateMeta() {
   triesEl.textContent = String(tries);
-  statusEl.textContent = status;
 }
 
 function normalize(s) {
@@ -23,7 +21,7 @@ function normalize(s) {
 function getHint() {
   if (tries < 2) return "Mājiens: 6 burti, tikai mazie burti.";
   if (tries < 4) return "Mājiens: saistīts ar lapas virsrakstu.";
-  if (tries < 6) return "Mājiens: sākas ar “a” un beidzas ar “i”.";
+  if (tries < 6) return "Mājiens: sākas ar “a” un beidzas ar “n”.";
   return `Atbilde: ${pwd}`;
 }
 
@@ -57,7 +55,7 @@ function onCheck() {
   tries += 1;
 
   if (guess === pwd) {
-    alert("Parole atmineta.");
+    alert("Parole atmineta");
     updateMeta("atminēts");
     lock();
     return;
@@ -68,15 +66,15 @@ function onCheck() {
 
   const lengthInfo =
     guess.length === pwd.length
-      ? "garums pareizs"
+      ? "ievadītās paroles garums pareizs"
       : guess.length < pwd.length
-        ? "par īsu"
-        : "par garu";
+        ? "ievadītās paroles garums ir par īsu"
+        : "ievadītās paroles garums ir par garu";
 
   if (tries === 3 || tries === 5) {
     alert(`Nepareizi. (${lengthInfo}) ${getHint()}`, "msg--bad");
   } else {
-    alert(`Nepareizi. Mēģini vēl. (${lengthInfo})`, "msg--bad");
+    alert(`Nepareizi. Mēģini vēlreiz. (${lengthInfo})`, "msg--bad");
   }
 }
 
