@@ -326,9 +326,6 @@
               Reset
             </button>
 
-            <span class="pill">Space:
-              <span id="bfSpace" class="mono">0</span>
-            </span>
             <span class="pill">
               Tried:
               <span id="bfTried" class="mono">0</span>
@@ -534,7 +531,6 @@
       const bfStop = el("bfStop");
       const bfReset = el("bfReset");
 
-      const bfSpace = el("bfSpace");
       const bfTried = el("bfTried");
 
       const bfHint = el("bfHint");
@@ -555,7 +551,6 @@
       function updateBruteMeta() {
         const chars = charsetFromMode(bfCharset.value);
         const len = Number(bfLen.value);
-        bfSpace.textContent = formatBigInt(powInt(chars.length, len));
       }
 
       function normalizeTarget(s) {
@@ -665,7 +660,6 @@
         bfRunning = false;
         bfToken += 1;
         bfUIRunning(false);
-        setStatus(bfStatus, "Stopped.");
       }
 
       function resetBruteForce() {
