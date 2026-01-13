@@ -413,7 +413,7 @@
           out = s[i] + out;
           c += 1;
           if (c === 3 && i !== 0) {
-            out = "_" + out;
+            out = " " + out;
             c = 0;
           }
         }
@@ -630,10 +630,10 @@
 
           if (i === 0n) {
             addLogLine(bfLog, guess, "#1");
-            clampLog(bfLog, 14);
+            clampLog(bfLog, 17576);
           } else if (Number(i % BigInt(logEvery)) === 0) {
             addLogLine(bfLog, guess, `#${formatBigInt(tried)}`);
-            clampLog(bfLog, 14);
+            clampLog(bfLog, 17576);
           }
 
           if (guess === target) {
