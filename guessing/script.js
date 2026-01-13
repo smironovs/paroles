@@ -1,23 +1,16 @@
-const SECRET = "atrodi";
+const pwd = "atrodi";
 
 let tries = 0;
 
 const card = document.getElementById("card");
 const pw = document.getElementById("pw");
 const check = document.getElementById("check");
-const hint = document.getElementById("hint");
 const reset = document.getElementById("reset");
 const toggle = document.getElementById("toggle");
 
 const triesEl = document.getElementById("tries");
 const statusEl = document.getElementById("status");
 const msg = document.getElementById("msg");
-
-function setMsg(text, kind) {
-  msg.textContent = text;
-  msg.classList.remove("msg--ok", "msg--bad");
-  if (kind) msg.classList.add(kind);
-}
 
 function updateMeta(status) {
   triesEl.textContent = String(tries);
@@ -32,20 +25,18 @@ function getHint() {
   if (tries < 2) return "Mājiens: 6 burti, tikai mazie burti.";
   if (tries < 4) return "Mājiens: saistīts ar lapas virsrakstu.";
   if (tries < 6) return "Mājiens: sākas ar “a” un beidzas ar “i”.";
-  return `Atbilde: ${SECRET}`;
+  return `Atbilde: ${pwd}`;
 }
 
 function lock() {
   pw.disabled = true;
   check.disabled = true;
-  hint.disabled = true;
   toggle.disabled = true;
 }
 
 function unlock() {
   pw.disabled = false;
   check.disabled = false;
-  hint.disabled = false;
   toggle.disabled = false;
 }
 
@@ -59,18 +50,15 @@ function onCheck() {
   const guess = normalize(pw.value);
 
   if (!guess) {
-    setMsg("Ievadi paroli un spied “Pārbaudīt”.", null);
+    alert("Ievadi paroli un spied “Pārbaudīt”.", null));
     updateMeta("gaida");
     return;
   }
 
   tries += 1;
 
-  if (guess === SECRET) {
-    setMsg(
-      "Pareizi. Uzdevums izpildīts. (Reālajā dzīvē šādi paroles neglabā.)",
-      "msg--ok"
-    );
+  if (guess === pwd) {
+    alert("Parole atmineta.");
     updateMeta("atminēts");
     lock();
     return;
@@ -80,16 +68,16 @@ function onCheck() {
   updateMeta("mēģina");
 
   const lengthInfo =
-    guess.length === SECRET.length
+    guess.length === pwd.length
       ? "garums pareizs"
-      : guess.length < SECRET.length
+      : guess.length < pwd.length
         ? "par īsu"
         : "par garu";
 
   if (tries === 3 || tries === 5) {
-    setMsg(`Nepareizi. (${lengthInfo}) ${getHint()}`, "msg--bad");
+    alert(`Nepareizi. (${lengthInfo}) ${getHint()}`, "msg--bad"));
   } else {
-    setMsg(`Nepareizi. Mēģini vēl. (${lengthInfo})`, "msg--bad");
+    alert(`Nepareizi. Mēģini vēl. (${lengthInfo})`, "msg--bad"));
   }
 }
 
@@ -99,13 +87,8 @@ function onReset() {
   pw.type = "password";
   toggle.textContent = "Rādīt";
   unlock();
-  setMsg("Sāc minēt. Vari spiest “Mājiens”.", null);
   updateMeta("gaida");
   pw.focus();
-}
-
-function onHint() {
-  setMsg(getHint(), null);
 }
 
 function onToggle() {
@@ -116,7 +99,6 @@ function onToggle() {
 }
 
 check.addEventListener("click", onCheck);
-hint.addEventListener("click", onHint);
 reset.addEventListener("click", onReset);
 toggle.addEventListener("click", onToggle);
 
