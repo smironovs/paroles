@@ -595,7 +595,7 @@
         const base = chars.length;
 
         let tried = 0n;
-        const logEvery = delay === 0 ? 600 : delay <= 40 ? 80 : 20;
+        const logEvery = delay === 0 ? 600 : delay <= 40 ? 1 : 20;
 
         function fromIndex(idx) {
           let x = idx;
@@ -637,9 +637,9 @@
 
           if (guess === target) {
             bfTried.textContent = formatBigInt(tried);
-            bfHint.textContent = `Index position: ${formatBigInt(
+            bfHint.textContent = `Parole atrodas šajā pozīcijā: ${formatBigInt(
               targetIndex + 1n
-            )} out of ${formatBigInt(space)}.`;
+            )} no ${formatBigInt(space)} iespējamajiem veideim.`;
             bfRunning = false;
             bfUIRunning(false);
             return;
