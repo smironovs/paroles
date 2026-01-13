@@ -10,7 +10,6 @@ const toggle = document.getElementById("toggle");
 
 const triesEl = document.getElementById("tries");
 const statusEl = document.getElementById("status");
-const msg = document.getElementById("msg");
 
 function updateMeta(status) {
   triesEl.textContent = String(tries);
@@ -50,7 +49,7 @@ function onCheck() {
   const guess = normalize(pw.value);
 
   if (!guess) {
-    alert("Ievadi paroli un spied “Pārbaudīt”.", null));
+    alert("Ievadi paroli un spied “Pārbaudīt”.", null);
     updateMeta("gaida");
     return;
   }
