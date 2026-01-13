@@ -74,9 +74,9 @@ function onCheck() {
         : "par garu";
 
   if (tries === 3 || tries === 5) {
-    alert(`Nepareizi. (${lengthInfo}) ${getHint()}`, "msg--bad"));
+    alert(`Nepareizi. (${lengthInfo}) ${getHint()}`, "msg--bad");
   } else {
-    alert(`Nepareizi. Mēģini vēl. (${lengthInfo})`, "msg--bad"));
+    alert(`Nepareizi. Mēģini vēl. (${lengthInfo})`, "msg--bad");
   }
 }
 
