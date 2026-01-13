@@ -483,7 +483,7 @@
           attempts += 1;
 
           addLogLine(dictLog, guess, `#${attempts}`);
-          clampLog(dictLog, 17576);
+          clampLog(dictLog, 14);
 
           if (guess === target) {
             setStatus(
@@ -596,7 +596,7 @@
         const base = chars.length;
 
         let tried = 0n;
-        const logEvery = delay === 0 ? 600 : delay <= 40 ? 1 : 20;
+        const logEvery = delay === 0 ? 1000 : delay <= 40 ? 50 : 1;
 
         function fromIndex(idx) {
           let x = idx;
@@ -630,10 +630,10 @@
 
           if (i === 0n) {
             addLogLine(bfLog, guess, "#1");
-            clampLog(bfLog, 17576);
+            clampLog(bfLog, 14);
           } else if (Number(i % BigInt(logEvery)) === 0) {
             addLogLine(bfLog, guess, `#${formatBigInt(tried)}`);
-            clampLog(bfLog, 17576);
+            clampLog(bfLog, 14);
           }
 
           if (guess === target) {
@@ -641,6 +641,7 @@
             bfHint.textContent = `Parole atrodas šajā pozīcijā: ${formatBigInt(
               targetIndex + 1n
             )} no ${formatBigInt(space)} iespējamajiem veideim.`;
+            addLogLine(bfLog, guess, `#${formatBigInt(tried)} ATBILDE`);
             bfRunning = false;
             bfUIRunning(false);
             return;
